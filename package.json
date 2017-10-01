@@ -9,5 +9,20 @@
     "name": "Ali Malekpour",
     "email": "ali@malekpour.me",
     "url": "https://github.com/malekpour"
+  },
+  "bin": {
+    "copack": "./bin/copack"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.31",
+    "@types/webpack": "^3.0.12",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "webpack": "^3.6.0"
   }
 }

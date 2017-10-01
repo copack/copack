@@ -1,0 +1,13 @@
+{
+  "name": "copack",
+  "version": "0.0.1",
+  "description": "JavaScript packaging helper",
+  "repository": {
+    "url": "https://github.com/copack/copack"
+  },
+  "author": {
+    "name": "Ali Malekpour",
+    "email": "ali@malekpour.me",
+    "url": "https://github.com/malekpour"
+  }
+}

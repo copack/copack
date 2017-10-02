@@ -1,11 +1,19 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as webpack from 'webpack';
+
+const appDirectory = fs.realpathSync(process.cwd());
+export const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
 
 let config = {
   webpack: {
-    entry: ['./src/index'],
+    entry: [resolveApp('src/index')],
     resolve: {
       extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx']
+    },
+    output: {
+      path: resolveApp('build'),
+      filename: 'static/js/bundle.js',
     },
     module: {
       rules: []
@@ -18,9 +26,9 @@ interface ICopackInfo {
 }
 
 let copackInfo: ICopackInfo = {};
-
-if (fs.existsSync('./copack.json')) {
-  copackInfo = require('./copack.json');
+let copackFile = resolveApp('copack.json');
+if (fs.existsSync(copackFile)) {
+  copackInfo = require(copackFile);
 } else {
   
 }

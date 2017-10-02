@@ -2,6 +2,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as webpack from 'webpack';
 
+import * as WebpackDevServer from 'webpack-dev-server';
+
+import {argv} from 'yargs';
+
 const appDirectory = fs.realpathSync(process.cwd());
 export const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
 
@@ -44,16 +48,29 @@ if (copackInfo.boilers && copackInfo.boilers.length) {
 
 let compiler = webpack(config.webpack);
 
-compiler.run((err, stats) => {
-  if (err) {
-    console.log(err);
-  }
+if (argv.build) {
+  compiler.run((err, stats) => {
+    if (err) {
+      console.log(err);
+    }
+  
+    if (stats.hasErrors()) {
+      console.log(stats.toString());
+    }
+  
+    if (stats.hasWarnings()) {
+      console.log(stats.toString());
+    }
+  })
+} else if (argv.start) {
+  const port = 3000;
+  const host = 'localhost';
+  const devServer = new WebpackDevServer(compiler, { publicPath: `http://${host}:${port}` });
+  
+  devServer.listen(port, host, err => {
+    if (err) {
+      return console.log(err);
+    }
+  })
+}
 
-  if (stats.hasErrors()) {
-    console.log(stats.toString());
-  }
-
-  if (stats.hasWarnings()) {
-    console.log(stats.toString());
-  }
-})
